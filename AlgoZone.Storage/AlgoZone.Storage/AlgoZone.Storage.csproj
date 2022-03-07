@@ -2,7 +2,19 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
+        <UserSecretsId>b28d36ae-6a60-4b76-b135-0d3d8bc6a003</UserSecretsId>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AlgoZone.Storage.Businesslayer\AlgoZone.Storage.Businesslayer.csproj" />
+      <ProjectReference Include="..\AlgoZone.Storage.Datalayer.TimescaleDB\AlgoZone.Storage.Datalayer.TimescaleDB.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="LightInject" Version="6.4.1" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+    </ItemGroup>
 
 </Project>
