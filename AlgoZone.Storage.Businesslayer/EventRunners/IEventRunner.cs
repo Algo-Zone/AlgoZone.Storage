@@ -7,7 +7,8 @@
         /// <summary>
         /// Starts listening for the events.
         /// </summary>
-        void Run();
+        /// <param name="cancellationToken">The cancellation token.</param>
+        ValueTask Run(CancellationToken cancellationToken);
 
         #endregion
     }

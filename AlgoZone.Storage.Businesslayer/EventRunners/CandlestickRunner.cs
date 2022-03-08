@@ -22,7 +22,10 @@ namespace AlgoZone.Storage.Businesslayer.EventRunners
         #region Methods
 
         /// <inheritdoc />
-        public void Run() { }
+        public ValueTask Run(CancellationToken cancellationToken)
+        {
+            return ValueTask.CompletedTask;
+        }
 
         #endregion
     }

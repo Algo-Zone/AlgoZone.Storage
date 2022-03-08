@@ -1,4 +1,5 @@
-﻿using AlgoZone.Storage.Businesslayer.Candlesticks;
+﻿using System.Threading.Tasks;
+using AlgoZone.Storage.Businesslayer.Candlesticks;
 using AlgoZone.Storage.Businesslayer.EventRunners;
 using AlgoZone.Storage.Datalayer.TimescaleDB;
 using LightInject;
@@ -25,10 +26,13 @@ namespace AlgoZone.Storage
 
         #region Static Methods
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             CreateConfiguration();
-            ConfigureServices();
+            var container = ConfigureServices();
+
+            var processor = container.GetInstance<StorageProcessor>();
+            await processor.StartProcessing();
         }
 
         private static void ConfigureDbContext(IServiceRegistry services)
@@ -44,21 +48,25 @@ namespace AlgoZone.Storage
 
         private static void ConfigureEventRunners(IServiceRegistry services)
         {
-            services.RegisterScoped<IEventRunner, CandlestickRunner>(nameof(CandlestickRunner));
+            services.Register<IEventRunner, CandlestickRunner>(nameof(CandlestickRunner));
         }
 
         private static void ConfigureManagers(IServiceRegistry services)
         {
-            services.RegisterScoped<ICandlestickManager, CandlestickManager>();
+            services.Register<ICandlestickManager, CandlestickManager>();
         }
 
-        private static void ConfigureServices()
+        private static ServiceContainer ConfigureServices()
         {
             var container = new ServiceContainer();
 
             ConfigureDbContext(container);
             ConfigureManagers(container);
             ConfigureEventRunners(container);
+
+            container.Register<StorageProcessor, StorageProcessor>();
+
+            return container;
         }
 
         private static void CreateConfiguration()
