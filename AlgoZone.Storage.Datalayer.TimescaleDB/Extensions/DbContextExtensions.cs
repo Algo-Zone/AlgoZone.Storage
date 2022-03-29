@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Linq;
+using System.Reflection;
 using AlgoZone.Storage.Datalayer.TimescaleDB.Attributes;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,16 +21,16 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Extensions
             context.Database.ExecuteSqlRaw("CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;");
 
             var entityTypes = context.Model.GetEntityTypes();
-            var hypertableEntities = entityTypes.Where(et => et.GetType().GetCustomAttribute(typeof(HypertableAttribute)) != null);
+            var hypertableEntities = entityTypes.Where(et => et.ClrType.GetCustomAttribute(typeof(HypertableAttribute)) != null);
             foreach (var hypertableEntity in hypertableEntities)
             {
-                var timeColumn = hypertableEntity.GetProperties().FirstOrDefault(p => p.PropertyInfo.GetCustomAttribute(typeof(HypertableTimeColumn)) != null);
+                var timeColumn = hypertableEntity.GetProperties().FirstOrDefault(p => p.PropertyInfo.GetCustomAttribute(typeof(HypertableTimeColumnAttribute)) != null);
                 if (timeColumn == null)
                     throw new InvalidOperationException($"No time column in hypertable: {hypertableEntities.GetType().Name}");
 
                 var tableName = hypertableEntity.GetTableName();
                 var columnName = timeColumn.GetColumnName();
-                context.Database.ExecuteSqlRaw($"SELECT create_hypertable(\"{tableName}\", \"{columnName}\");");
+                context.Database.ExecuteSqlRaw($"SELECT create_hypertable('\"{tableName}\"', '{columnName}');");
             }
         }
 

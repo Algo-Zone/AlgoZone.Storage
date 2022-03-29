@@ -1,4 +1,7 @@
-﻿namespace AlgoZone.Storage.Businesslayer.EventRunners
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+namespace AlgoZone.Storage.Businesslayer.EventRunners
 {
     public interface IEventRunner
     {
@@ -9,6 +12,11 @@
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         ValueTask Run(CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Stops the event runner.
+        /// </summary>
+        void Stop();
 
         #endregion
     }

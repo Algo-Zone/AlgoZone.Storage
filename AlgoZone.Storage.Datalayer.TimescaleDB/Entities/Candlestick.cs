@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using AlgoZone.Storage.Datalayer.TimescaleDB.Attributes;
 
 namespace AlgoZone.Storage.Datalayer.TimescaleDB.Entities
@@ -8,27 +9,29 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Entities
     {
         #region Properties
 
-        [Column(TypeName = "float", Order = 5)]
-        public float Close { get; set; }
+        [Column(Order = 5)]
+        public decimal Close { get; set; }
 
-        [Column(TypeName = "float", Order = 3)]
-        public float High { get; set; }
+        [Column(Order = 3)]
+        public decimal High { get; set; }
 
-        [Column(TypeName = "bigserial", Order = 0)]
-        public long Id { get; set; }
+        [Column(Order = 4)]
+        public decimal Low { get; set; }
 
-        [Column(TypeName = "float", Order = 4)]
-        public float Low { get; set; }
-
-        [Column(TypeName = "float", Order = 2)]
-        public float Open { get; set; }
+        [Column(Order = 2)]
+        public decimal Open { get; set; }
 
         [HypertableTimeColumn]
-        [Column(TypeName = "timestamptz", Order = 1)]
+        [Column(Order = 0)]
         public DateTime Timestamp { get; set; }
 
-        [Column(TypeName = "float", Order = 6)]
-        public float Volume { get; set; }
+        public virtual TradingPair TradingPair { get; set; }
+
+        [Column(Order = 1)]
+        public int TradingPairId { get; set; }
+
+        [Column(Order = 6)]
+        public decimal Volume { get; set; }
 
         #endregion
     }
