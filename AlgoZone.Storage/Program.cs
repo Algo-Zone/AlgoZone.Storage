@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AlgoZone.Storage.Businesslayer.Candlesticks;
 using AlgoZone.Storage.Businesslayer.EventRunners;
 using AlgoZone.Storage.Datalayer.RabbitMQ;
@@ -9,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Topshelf;
+using Host = Microsoft.Extensions.Hosting.Host;
 
 namespace AlgoZone.Storage
 {
@@ -37,13 +40,18 @@ namespace AlgoZone.Storage
         public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
+            var rc = HostFactory.Run(x =>
+            {
+                x.Service<Startup>(s =>
+                {
+                    s.ConstructUsing(c => host.Services.GetRequiredService<Startup>());
+                    s.WhenStarted(startup => startup.Start());
+                    s.WhenStopped(startup => startup.Stop());
+                });
+            });
 
-            var timescaleContext = host.Services.GetRequiredService<TimescaleDbContext>();
-            await timescaleContext.Database.MigrateAsync();
-            timescaleContext.ApplyHypertables();
-
-            var processor = host.Services.GetRequiredService<StorageProcessor>();
-            await processor.StartProcessing();
+            var exitCode = (int)Convert.ChangeType(rc, rc.GetTypeCode());
+            Environment.ExitCode = exitCode;
         }
 
         private static void ConfigureDals(IServiceRegistry services)
@@ -90,6 +98,8 @@ namespace AlgoZone.Storage
 
             services.Register(factory => _configuration);
             services.Register<StorageProcessor, StorageProcessor>();
+            
+            services.Register<Startup>();
         }
 
         private static void CreateConfiguration()

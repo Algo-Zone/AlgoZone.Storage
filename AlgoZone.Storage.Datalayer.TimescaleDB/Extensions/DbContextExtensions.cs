@@ -30,7 +30,7 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Extensions
 
                 var tableName = hypertableEntity.GetTableName();
                 var columnName = timeColumn.GetColumnName();
-                context.Database.ExecuteSqlRaw($"SELECT create_hypertable('\"{tableName}\"', '{columnName}');");
+                context.Database.ExecuteSqlRaw($"SELECT create_hypertable('\"{tableName}\"', '{columnName}', if_not_exists => TRUE);");
             }
         }
 
