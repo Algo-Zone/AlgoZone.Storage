@@ -5,6 +5,7 @@ using AlgoZone.Storage.Businesslayer.EventRunners;
 using AlgoZone.Storage.Datalayer.RabbitMQ;
 using AlgoZone.Storage.Datalayer.TimescaleDB;
 using AlgoZone.Storage.Datalayer.TimescaleDB.Extensions;
+using AlgoZone.Storage.Extensions;
 using LightInject;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -54,47 +55,15 @@ namespace AlgoZone.Storage
             Environment.ExitCode = exitCode;
         }
 
-        private static void ConfigureDals(IServiceRegistry services)
-        {
-            services.Register(factory =>
-            {
-                var host = _configuration.GetSection(ConfigurationConstants.RabbitMqHost).Value;
-                var username = _configuration.GetSection(ConfigurationConstants.RabbitMqUsername).Value;
-                var password = _configuration.GetSection(ConfigurationConstants.RabbitMqPassword).Value;
-                return new RabbitMqDal(host, username, password);
-            });
-        }
-
-        private static void ConfigureDbContext(IServiceRegistry services)
-        {
-            var connectionString = _configuration.GetConnectionString("TimescaleDb");
-            services.Register(factory =>
-            {
-                var optionsBuilder = new DbContextOptionsBuilder<TimescaleDbContext>();
-                optionsBuilder.UseNpgsql(connectionString, providerOptions => providerOptions.EnableRetryOnFailure());
-                return new TimescaleDbContext(optionsBuilder.Options);
-            });
-            services.Register<DbContext>(factory => factory.GetInstance<TimescaleDbContext>());
-        }
-
-        private static void ConfigureEventRunners(IServiceRegistry services)
-        {
-            services.Register<IEventRunner, CandlestickEventRunner>(nameof(CandlestickEventRunner));
-        }
-
-        private static void ConfigureManagers(IServiceRegistry services)
-        {
-            services.Register<ICandlestickManager, CandlestickManager>();
-        }
 
         private static void ConfigureServices(IServiceRegistry services)
         {
             CreateConfiguration();
             
-            ConfigureDbContext(services);
-            ConfigureDals(services);
-            ConfigureManagers(services);
-            ConfigureEventRunners(services);
+            services.AddDatabaseContexts(_configuration);
+            services.AddDatalayers(_configuration);
+            services.AddManagers();
+            services.AddEventRunners();
 
             services.Register(factory => _configuration);
             services.Register<StorageProcessor, StorageProcessor>();
