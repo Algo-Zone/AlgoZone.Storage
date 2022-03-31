@@ -6,11 +6,16 @@ namespace AlgoZone.Storage.Businesslayer.Mappers
 {
     public sealed class CandlestickProfile : Profile
     {
+        #region Constructors
+
         public CandlestickProfile()
         {
-            CreateMap<SymbolCandlestick, Candlestick>();
+            CreateMap<SymbolCandlestick, Candlestick>()
+                .ForMember(dst => dst.OpenTime, opts => opts.MapFrom(src => src.Timestamp));
 
             CreateMap<Candlestick, Datalayer.TimescaleDB.Entities.Candlestick>();
         }
+
+        #endregion
     }
 }

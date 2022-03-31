@@ -2,8 +2,10 @@
 using System.Threading.Tasks;
 using AlgoZone.Core.EventData;
 using AlgoZone.Storage.Businesslayer.Candlesticks;
+using AlgoZone.Storage.Businesslayer.Candlesticks.Models;
 using AlgoZone.Storage.Businesslayer.Events;
 using AlgoZone.Storage.Datalayer.RabbitMQ;
+using AutoMapper;
 
 namespace AlgoZone.Storage.Businesslayer.EventRunners
 {
@@ -13,16 +15,19 @@ namespace AlgoZone.Storage.Businesslayer.EventRunners
 
         private readonly ICandlestickManager _candlestickManager;
 
-        private readonly IEventConsumer<SymbolTickEventData> _eventConsumer;
+        private readonly IEventConsumer<SymbolCandlestickEventData> _eventConsumer;
+
+        private readonly IMapper _mapper;
 
         #endregion
 
         #region Constructors
 
-        public CandlestickEventRunner(ICandlestickManager candlestickManager, RabbitMqDal rabbitMqDal)
+        public CandlestickEventRunner(ICandlestickManager candlestickManager, IMapper mapper, RabbitMqDal rabbitMqDal)
         {
             _candlestickManager = candlestickManager;
-            _eventConsumer = new RabbitMqEventConsumer<SymbolTickEventData>(rabbitMqDal);
+            _mapper = mapper;
+            _eventConsumer = new RabbitMqEventConsumer<SymbolCandlestickEventData>(rabbitMqDal);
 
             _eventConsumer.MessageReceived += OnMessageReceived;
         }
@@ -36,9 +41,10 @@ namespace AlgoZone.Storage.Businesslayer.EventRunners
         /// </summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="eventData">The event date.</param>
-        private void OnMessageReceived(object sender, SymbolTickEventData eventData)
+        private void OnMessageReceived(object sender, SymbolCandlestickEventData eventData)
         {
-            
+            var candlestick = _mapper.Map<Candlestick>(eventData.Data);
+            _candlestickManager.AddCandlestick(candlestick);
         }
 
         #endregion

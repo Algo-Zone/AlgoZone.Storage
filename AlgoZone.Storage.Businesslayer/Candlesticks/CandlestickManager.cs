@@ -1,4 +1,7 @@
-﻿using AlgoZone.Storage.Datalayer.TimescaleDB;
+﻿using System;
+using AlgoZone.Storage.Businesslayer.Candlesticks.Models;
+using AlgoZone.Storage.Businesslayer.Candlesticks.Stores;
+using NLog;
 
 namespace AlgoZone.Storage.Businesslayer.Candlesticks
 {
@@ -6,15 +9,38 @@ namespace AlgoZone.Storage.Businesslayer.Candlesticks
     {
         #region Fields
 
-        private TimescaleDbContext _timescaleDbContext;
+        private readonly ICandlestickStore _candlestickStore;
+
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         #endregion
 
         #region Constructors
 
-        public CandlestickManager(TimescaleDbContext timescaleDbContext)
+        public CandlestickManager(ICandlestickStore candlestickStore)
         {
-            _timescaleDbContext = timescaleDbContext;
+            _candlestickStore = candlestickStore;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <inheritdoc />
+        public bool AddCandlestick(Candlestick candlestick)
+        {
+            try
+            {
+                _candlestickStore.AddCandlestick(candlestick);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+            }
+
+            return false;
         }
 
         #endregion

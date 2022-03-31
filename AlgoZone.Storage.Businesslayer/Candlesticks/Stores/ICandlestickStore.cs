@@ -1,17 +1,16 @@
 ﻿using AlgoZone.Storage.Businesslayer.Candlesticks.Models;
 
-namespace AlgoZone.Storage.Businesslayer.Candlesticks
+namespace AlgoZone.Storage.Businesslayer.Candlesticks.Stores
 {
-    public interface ICandlestickManager
+    public interface ICandlestickStore
     {
         #region Methods
 
         /// <summary>
-        /// Adds a candlestick.
+        /// Adds a candlestick to the store.
         /// </summary>
         /// <param name="candlestick">The candlestick to add.</param>
-        /// <returns></returns>
-        bool AddCandlestick(Candlestick candlestick);
+        void AddCandlestick(Candlestick candlestick);
 
         #endregion
     }

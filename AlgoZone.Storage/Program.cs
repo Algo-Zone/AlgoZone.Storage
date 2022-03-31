@@ -60,13 +60,15 @@ namespace AlgoZone.Storage
         {
             CreateConfiguration();
             
+            services.AddMappers();
             services.AddDatabaseContexts(_configuration);
             services.AddDatalayers(_configuration);
+            services.AddStores();
             services.AddManagers();
             services.AddEventRunners();
 
             services.Register(factory => _configuration);
-            services.Register<StorageProcessor, StorageProcessor>();
+            services.Register<StorageProcessor>();
             
             services.Register<Startup>();
         }
