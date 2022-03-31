@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AlgoZone.Storage.Datalayer.TimescaleDB.Entities
 {
-    public class Symbol
+    public class Asset
     {
         #region Properties
 

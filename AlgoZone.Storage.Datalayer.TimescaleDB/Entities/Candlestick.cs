@@ -23,7 +23,7 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Entities
 
         [HypertableTimeColumn]
         [Column(Order = 0)]
-        public DateTime Timestamp { get; set; }
+        public DateTime OpenTime { get; set; }
 
         public virtual TradingPair TradingPair { get; set; }
 

@@ -11,8 +11,8 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Configurations
         /// <inheritdoc />
         public void Configure(EntityTypeBuilder<TradingPair> builder)
         {
-            builder.HasOne(tp => tp.BaseSymbol).WithMany().HasForeignKey(tp => tp.BaseSymbolId);
-            builder.HasOne(tp => tp.QuoteSymbol).WithMany().HasForeignKey(tp => tp.QuoteSymbolId);
+            builder.HasOne(tp => tp.BaseAsset).WithMany().HasForeignKey(tp => tp.BaseAssetId);
+            builder.HasOne(tp => tp.QuoteAsset).WithMany().HasForeignKey(tp => tp.QuoteAssetId);
         }
 
         #endregion

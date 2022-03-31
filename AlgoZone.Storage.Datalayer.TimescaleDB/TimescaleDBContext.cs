@@ -1,6 +1,5 @@
 ﻿using AlgoZone.Storage.Datalayer.TimescaleDB.Configurations;
 using AlgoZone.Storage.Datalayer.TimescaleDB.Entities;
-using AlgoZone.Storage.Datalayer.TimescaleDB.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlgoZone.Storage.Datalayer.TimescaleDB
@@ -9,17 +8,15 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB
     {
         #region Properties
 
-        public DbSet<Candlestick> Candlesticks { get; set; }
+        public DbSet<Asset> Assets { get; set; }
 
-        public DbSet<Symbol> Symbols { get; set; }
+        public DbSet<Candlestick> Candlesticks { get; set; }
 
         public DbSet<TradingPair> TradingPairs { get; set; }
 
         #endregion
 
         #region Constructors
-
-        public TimescaleDbContext() { }
 
         public TimescaleDbContext(DbContextOptions<TimescaleDbContext> options) : base(options) { }
 
@@ -33,8 +30,6 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB
             modelBuilder.ApplyConfiguration(new CandlestickEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new TradingPairEntityTypeConfiguration());
         }
-        
-        
 
         #endregion
     }

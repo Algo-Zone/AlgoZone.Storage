@@ -11,7 +11,7 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Configurations
         /// <inheritdoc />
         public void Configure(EntityTypeBuilder<Candlestick> builder)
         {
-            builder.HasKey(c => new { c.Timestamp, c.TradingPairId });
+            builder.HasKey(c => new { c.OpenTime, c.TradingPairId });
             builder.HasOne(c => c.TradingPair).WithMany().HasForeignKey(c => c.TradingPairId);
         }
 

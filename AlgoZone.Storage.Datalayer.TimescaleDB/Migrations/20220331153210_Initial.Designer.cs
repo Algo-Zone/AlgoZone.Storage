@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
 {
     [DbContext(typeof(TimescaleDbContext))]
-    [Migration("20220329211540_Initial")]
+    [Migration("20220331153210_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,9 +24,35 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("AlgoZone.Storage.Datalayer.TimescaleDB.Entities.Asset", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnOrder(0);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnOrder(2);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(6)
+                        .HasColumnType("character varying(6)")
+                        .HasColumnOrder(1);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Assets");
+                });
+
             modelBuilder.Entity("AlgoZone.Storage.Datalayer.TimescaleDB.Entities.Candlestick", b =>
                 {
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<DateTime>("OpenTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnOrder(0);
 
@@ -54,37 +80,11 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
                         .HasColumnType("numeric")
                         .HasColumnOrder(6);
 
-                    b.HasKey("Timestamp", "TradingPairId");
+                    b.HasKey("OpenTime", "TradingPairId");
 
                     b.HasIndex("TradingPairId");
 
                     b.ToTable("Candlesticks");
-                });
-
-            modelBuilder.Entity("AlgoZone.Storage.Datalayer.TimescaleDB.Entities.Symbol", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnOrder(0);
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnOrder(2);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(6)
-                        .HasColumnType("character varying(6)")
-                        .HasColumnOrder(1);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Symbols");
                 });
 
             modelBuilder.Entity("AlgoZone.Storage.Datalayer.TimescaleDB.Entities.TradingPair", b =>
@@ -96,19 +96,24 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BaseSymbolId")
+                    b.Property<int>("BaseAssetId")
                         .HasColumnType("integer")
                         .HasColumnOrder(1);
 
-                    b.Property<int>("QuoteSymbolId")
+                    b.Property<int>("QuoteAssetId")
                         .HasColumnType("integer")
                         .HasColumnOrder(2);
 
+                    b.Property<string>("Symbol")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnOrder(3);
+
                     b.HasKey("Id");
 
-                    b.HasIndex("BaseSymbolId");
+                    b.HasIndex("BaseAssetId");
 
-                    b.HasIndex("QuoteSymbolId");
+                    b.HasIndex("QuoteAssetId");
 
                     b.ToTable("TradingPairs");
                 });
@@ -126,21 +131,21 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
 
             modelBuilder.Entity("AlgoZone.Storage.Datalayer.TimescaleDB.Entities.TradingPair", b =>
                 {
-                    b.HasOne("AlgoZone.Storage.Datalayer.TimescaleDB.Entities.Symbol", "BaseSymbol")
+                    b.HasOne("AlgoZone.Storage.Datalayer.TimescaleDB.Entities.Asset", "BaseAsset")
                         .WithMany()
-                        .HasForeignKey("BaseSymbolId")
+                        .HasForeignKey("BaseAssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AlgoZone.Storage.Datalayer.TimescaleDB.Entities.Symbol", "QuoteSymbol")
+                    b.HasOne("AlgoZone.Storage.Datalayer.TimescaleDB.Entities.Asset", "QuoteAsset")
                         .WithMany()
-                        .HasForeignKey("QuoteSymbolId")
+                        .HasForeignKey("QuoteAssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("BaseSymbol");
+                    b.Navigation("BaseAsset");
 
-                    b.Navigation("QuoteSymbol");
+                    b.Navigation("QuoteAsset");
                 });
 #pragma warning restore 612, 618
         }

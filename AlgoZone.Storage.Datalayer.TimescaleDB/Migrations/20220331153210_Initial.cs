@@ -11,7 +11,7 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Symbols",
+                name: "Assets",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -21,7 +21,7 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Symbols", x => x.Id);
+                    table.PrimaryKey("PK_Assets", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -30,22 +30,23 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    BaseSymbolId = table.Column<int>(type: "integer", nullable: false),
-                    QuoteSymbolId = table.Column<int>(type: "integer", nullable: false)
+                    BaseAssetId = table.Column<int>(type: "integer", nullable: false),
+                    QuoteAssetId = table.Column<int>(type: "integer", nullable: false),
+                    Symbol = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TradingPairs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TradingPairs_Symbols_BaseSymbolId",
-                        column: x => x.BaseSymbolId,
-                        principalTable: "Symbols",
+                        name: "FK_TradingPairs_Assets_BaseAssetId",
+                        column: x => x.BaseAssetId,
+                        principalTable: "Assets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TradingPairs_Symbols_QuoteSymbolId",
-                        column: x => x.QuoteSymbolId,
-                        principalTable: "Symbols",
+                        name: "FK_TradingPairs_Assets_QuoteAssetId",
+                        column: x => x.QuoteAssetId,
+                        principalTable: "Assets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -54,7 +55,7 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
                 name: "Candlesticks",
                 columns: table => new
                 {
-                    Timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    OpenTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     TradingPairId = table.Column<int>(type: "integer", nullable: false),
                     Open = table.Column<decimal>(type: "numeric", nullable: false),
                     High = table.Column<decimal>(type: "numeric", nullable: false),
@@ -64,7 +65,7 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Candlesticks", x => new { x.Timestamp, x.TradingPairId });
+                    table.PrimaryKey("PK_Candlesticks", x => new { x.OpenTime, x.TradingPairId });
                     table.ForeignKey(
                         name: "FK_Candlesticks_TradingPairs_TradingPairId",
                         column: x => x.TradingPairId,
@@ -79,14 +80,14 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
                 column: "TradingPairId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TradingPairs_BaseSymbolId",
+                name: "IX_TradingPairs_BaseAssetId",
                 table: "TradingPairs",
-                column: "BaseSymbolId");
+                column: "BaseAssetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TradingPairs_QuoteSymbolId",
+                name: "IX_TradingPairs_QuoteAssetId",
                 table: "TradingPairs",
-                column: "QuoteSymbolId");
+                column: "QuoteAssetId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -98,7 +99,7 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
                 name: "TradingPairs");
 
             migrationBuilder.DropTable(
-                name: "Symbols");
+                name: "Assets");
         }
     }
 }
