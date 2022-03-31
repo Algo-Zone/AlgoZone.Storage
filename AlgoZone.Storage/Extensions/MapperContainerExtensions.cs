@@ -14,7 +14,9 @@ namespace AlgoZone.Storage.Extensions
         {
             var config = new MapperConfiguration(cfg =>
             {
+                cfg.AddProfile<AssetProfile>();
                 cfg.AddProfile<CandlestickProfile>();
+                cfg.AddProfile<TradingPairProfile>();
             });
             services.Register(c => config.CreateMapper());
         }
