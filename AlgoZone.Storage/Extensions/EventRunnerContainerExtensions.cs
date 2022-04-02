@@ -12,6 +12,7 @@ namespace AlgoZone.Storage.Extensions
         public static void AddEventRunners(this IServiceRegistry services)
         {
             services.Register<IEventRunner, CandlestickEventRunner>(nameof(CandlestickEventRunner));
+            services.Register<IEventRunner, TradingPairsEventRunner>(nameof(TradingPairsEventRunner));
         }
 
         #endregion

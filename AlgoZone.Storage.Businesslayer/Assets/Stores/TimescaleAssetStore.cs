@@ -39,6 +39,8 @@ namespace AlgoZone.Storage.Businesslayer.Assets.Stores
 
             _db.Assets.Add(entity);
             _db.SaveChanges();
+
+            asset.Id = entity.Id;
         }
 
         /// <inheritdoc />

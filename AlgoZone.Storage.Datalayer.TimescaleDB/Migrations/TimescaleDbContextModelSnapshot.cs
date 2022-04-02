@@ -39,8 +39,8 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(6)
-                        .HasColumnType("character varying(6)")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)")
                         .HasColumnOrder(1);
 
                     b.HasKey("Id");

@@ -40,7 +40,7 @@ namespace AlgoZone.Storage.Businesslayer.EventRunners
         /// Event handler for messages.
         /// </summary>
         /// <param name="sender">The event sender.</param>
-        /// <param name="eventData">The event date.</param>
+        /// <param name="eventData">The event data.</param>
         private void OnMessageReceived(object sender, SymbolCandlestickEventData eventData)
         {
             var candlestick = _mapper.Map<Candlestick>(eventData.Data);

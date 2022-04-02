@@ -30,7 +30,7 @@ namespace AlgoZone.Storage.Businesslayer.TradingPairs
         #region Methods
 
         /// <inheritdoc />
-        public bool AddTradingPair(Asset quoteAsset, Asset baseAsset)
+        public bool AddTradingPair(Asset baseAsset, Asset quoteAsset)
         {
             if (quoteAsset.Id <= 0)
                 throw new ArgumentNullException(nameof(quoteAsset));
@@ -40,9 +40,13 @@ namespace AlgoZone.Storage.Businesslayer.TradingPairs
 
             try
             {
+                var symbol = $"{baseAsset.Name}{quoteAsset.Name}";
+                if (GetTradingPair(symbol) != null)
+                    return true;
+                
                 var tradingPair = new TradingPair
                 {
-                    Symbol = $"{quoteAsset.Name}{baseAsset.Name}",
+                    Symbol = symbol,
                     BaseAsset = baseAsset,
                     QuoteAsset = quoteAsset
                 };

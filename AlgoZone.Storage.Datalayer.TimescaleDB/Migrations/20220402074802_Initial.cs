@@ -16,7 +16,7 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(6)", maxLength: 6, nullable: false),
+                    Name = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     FullName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>

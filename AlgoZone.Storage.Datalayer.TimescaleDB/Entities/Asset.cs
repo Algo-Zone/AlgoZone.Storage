@@ -15,7 +15,7 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Entities
         public int Id { get; set; }
 
         [Column(Order = 1)]
-        [StringLength(6)]
+        [StringLength(10)]
         public string Name { get; set; }
 
         #endregion

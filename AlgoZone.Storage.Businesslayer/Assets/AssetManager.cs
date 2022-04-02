@@ -29,7 +29,7 @@ namespace AlgoZone.Storage.Businesslayer.Assets
         /// <inheritdoc />
         public bool AddAsset(Asset asset)
         {
-            if (asset.Id <= 0)
+            if (asset.Id > 0)
                 throw new ArgumentOutOfRangeException(nameof(asset));
 
             try

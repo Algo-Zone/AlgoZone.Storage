@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
 {
     [DbContext(typeof(TimescaleDbContext))]
-    [Migration("20220331153210_Initial")]
+    [Migration("20220402074802_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,8 +41,8 @@ namespace AlgoZone.Storage.Datalayer.TimescaleDB.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(6)
-                        .HasColumnType("character varying(6)")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)")
                         .HasColumnOrder(1);
 
                     b.HasKey("Id");

@@ -11,10 +11,10 @@ namespace AlgoZone.Storage.Businesslayer.TradingPairs
         /// <summary>
         /// Adds a new trading pair.
         /// </summary>
-        /// <param name="quoteAsset">The quote asset.</param>
         /// <param name="baseAsset">The base asset.</param>
+        /// <param name="quoteAsset">The quote asset.</param>
         /// <returns></returns>
-        bool AddTradingPair(Asset quoteAsset, Asset baseAsset);
+        bool AddTradingPair(Asset baseAsset, Asset quoteAsset);
 
         /// <summary>
         /// Gets the trading pair by it's id.

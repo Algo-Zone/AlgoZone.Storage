@@ -38,6 +38,9 @@ namespace AlgoZone.Storage.Businesslayer.TradingPairs.Stores
             var entity = _mapper.Map<Datalayer.TimescaleDB.Entities.TradingPair>(tradingPair);
             if (entity == null)
                 return;
+
+            entity.QuoteAsset = null;
+            entity.BaseAsset = null;
             
             _db.TradingPairs.Add(entity);
             _db.SaveChanges();
