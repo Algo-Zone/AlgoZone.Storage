@@ -4,6 +4,7 @@ using AlgoZone.Core.EventData;
 using AlgoZone.Storage.Businesslayer.Candlesticks;
 using AlgoZone.Storage.Businesslayer.Candlesticks.Models;
 using AlgoZone.Storage.Businesslayer.Events;
+using AlgoZone.Storage.Businesslayer.TradingPairs;
 using AlgoZone.Storage.Datalayer.RabbitMQ;
 using AutoMapper;
 
@@ -19,13 +20,16 @@ namespace AlgoZone.Storage.Businesslayer.EventRunners
 
         private readonly IMapper _mapper;
 
+        private readonly ITradingPairManager _tradingPairManager;
+
         #endregion
 
         #region Constructors
 
-        public CandlestickEventRunner(ICandlestickManager candlestickManager, IMapper mapper, RabbitMqDal rabbitMqDal)
+        public CandlestickEventRunner(ICandlestickManager candlestickManager, ITradingPairManager tradingPairManager, IMapper mapper, RabbitMqDal rabbitMqDal)
         {
             _candlestickManager = candlestickManager;
+            _tradingPairManager = tradingPairManager;
             _mapper = mapper;
             _eventConsumer = new RabbitMqEventConsumer<SymbolCandlestickEventData>(rabbitMqDal);
 
@@ -44,7 +48,9 @@ namespace AlgoZone.Storage.Businesslayer.EventRunners
         private void OnMessageReceived(object sender, SymbolCandlestickEventData eventData)
         {
             var candlestick = _mapper.Map<Candlestick>(eventData.Data);
-            _candlestickManager.AddCandlestick(candlestick);
+            var tradingPair = _tradingPairManager.GetTradingPair(eventData.Data.Symbol);
+            candlestick.TradingPair = tradingPair;
+            _candlestickManager.UpdateCandlestick(candlestick);
         }
 
         #endregion

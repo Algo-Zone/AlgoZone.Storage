@@ -11,9 +11,11 @@ namespace AlgoZone.Storage.Businesslayer.Mappers
         public CandlestickProfile()
         {
             CreateMap<SymbolCandlestick, Candlestick>()
-                .ForMember(dst => dst.OpenTime, opts => opts.MapFrom(src => src.Timestamp));
+                .ForMember(dst => dst.OpenTime, opts => opts.MapFrom(src => src.Timestamp))
+                .ReverseMap();
 
-            CreateMap<Candlestick, Datalayer.TimescaleDB.Entities.Candlestick>();
+            CreateMap<Candlestick, Datalayer.TimescaleDB.Entities.Candlestick>()
+                .ReverseMap();
         }
 
         #endregion

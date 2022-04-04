@@ -11,7 +11,7 @@ namespace AlgoZone.Storage.Businesslayer.Candlesticks
         /// </summary>
         /// <param name="candlestick">The candlestick to add.</param>
         /// <returns></returns>
-        bool AddCandlestick(Candlestick candlestick);
+        bool UpdateCandlestick(Candlestick candlestick);
 
         #endregion
     }

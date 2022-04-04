@@ -25,13 +25,16 @@ namespace AlgoZone.Storage.Businesslayer.Candlesticks
         #endregion
 
         #region Methods
-
+        
         /// <inheritdoc />
-        public bool AddCandlestick(Candlestick candlestick)
+        public bool UpdateCandlestick(Candlestick candlestick)
         {
             try
             {
-                _candlestickStore.AddCandlestick(candlestick);
+                if(_candlestickStore.CheckIfCandlestickExists(candlestick))
+                    _candlestickStore.UpdateCandlestick(candlestick);
+                else
+                    _candlestickStore.AddCandlestick(candlestick);
 
                 return true;
             }
