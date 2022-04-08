@@ -10,6 +10,8 @@ COPY ["AlgoZone.Storage.Datalayer.TimescaleDB/AlgoZone.Storage.Datalayer.Timesca
 RUN dotnet restore "AlgoZone.Storage/AlgoZone.Storage.csproj"
 COPY . .
 WORKDIR "/src/AlgoZone.Storage"
+
+RUN dotnet nuget add source --username github_username --password github_token https://nuget.pkg.github.com/Algo-Zone/index.json --name github
 RUN dotnet build "AlgoZone.Storage.csproj" -c Release -o /app/build
 
 FROM build AS publish
@@ -19,3 +21,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "AlgoZone.Storage.dll"]
+

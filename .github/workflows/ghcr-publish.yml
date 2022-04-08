@@ -69,3 +69,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          secrets: |
+            "github_username=${{ secrets.GHCR_USERNAME}"
+            "github_token=${{ secrets.GHCR_TOKEN}"
