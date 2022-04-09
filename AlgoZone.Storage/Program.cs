@@ -77,6 +77,7 @@ namespace AlgoZone.Storage
         {
             _configuration = new ConfigurationBuilder()
                              .AddUserSecrets<Program>()
+                             .AddEnvironmentVariables()
                              .Build();
         }
 
