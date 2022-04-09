@@ -13,7 +13,7 @@ WORKDIR "/src/AlgoZone.Storage"
 
 ARG GH_USERNAME
 ARG GH_TOKEN
-RUN dotnet nuget add source --username $GH_USERNAME --password $GH_TOKEN https://nuget.pkg.github.com/Algo-Zone/index.json --name github
+RUN dotnet nuget add source --username $GH_USERNAME --password $GH_TOKEN --store-password-in-clear-text https://nuget.pkg.github.com/Algo-Zone/index.json --name github
 RUN dotnet build "AlgoZone.Storage.csproj" -c Release -o /app/build
 
 FROM build AS publish
