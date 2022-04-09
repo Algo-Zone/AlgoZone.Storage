@@ -11,7 +11,9 @@ RUN dotnet restore "AlgoZone.Storage/AlgoZone.Storage.csproj"
 COPY . .
 WORKDIR "/src/AlgoZone.Storage"
 
-RUN dotnet nuget add source --username github_username --password github_token https://nuget.pkg.github.com/Algo-Zone/index.json --name github
+ARG GH_USERNAME
+ARG GH_TOKEN
+RUN dotnet nuget add source --username $GH_USERNAME --password $GH_TOKEN https://nuget.pkg.github.com/Algo-Zone/index.json --name github
 RUN dotnet build "AlgoZone.Storage.csproj" -c Release -o /app/build
 
 FROM build AS publish
