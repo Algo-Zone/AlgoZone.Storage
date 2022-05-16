@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Datalayer", "Datalayer", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoZone.Storage.Datalayer.RabbitMQ", "AlgoZone.Storage.Datalayer.RabbitMQ\AlgoZone.Storage.Datalayer.RabbitMQ.csproj", "{25C96178-1D58-49AA-B30D-2454BED2478B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoZone.Storage.Api", "AlgoZone.Storage.Api\AlgoZone.Storage.Api.csproj", "{335D3631-3380-4267-8556-039B337A6A05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{25C96178-1D58-49AA-B30D-2454BED2478B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25C96178-1D58-49AA-B30D-2454BED2478B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25C96178-1D58-49AA-B30D-2454BED2478B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{335D3631-3380-4267-8556-039B337A6A05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{335D3631-3380-4267-8556-039B337A6A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{335D3631-3380-4267-8556-039B337A6A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{335D3631-3380-4267-8556-039B337A6A05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CFADF366-7648-49BB-B494-C3B7ECF219A7} = {4F7750CD-8DB0-4192-A022-77C19644A398}

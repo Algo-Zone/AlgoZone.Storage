@@ -88,7 +88,7 @@ namespace AlgoZone.Storage.Businesslayer.TradingPairs
 
             try
             {
-                return _tradingPairStore.GetTradingPairBySymbol(symbol);
+                return _tradingPairStore.GetTradingPairBySymbol(symbol.ToUpper());
             }
             catch (Exception e)
             {

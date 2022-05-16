@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AlgoZone.Storage.Businesslayer.Candlesticks.Models;
 using AlgoZone.Storage.Datalayer.TimescaleDB;
 using AutoMapper;
@@ -50,6 +52,13 @@ namespace AlgoZone.Storage.Businesslayer.Candlesticks.Stores
         public Datalayer.TimescaleDB.Entities.Candlestick GetCandlestickEntity(DateTime openTime, int tradingPairId)
         {
             return _db.Candlesticks.Find(openTime, tradingPairId);
+        }
+
+        /// <inheritdoc />
+        public ICollection<Candlestick> GetCandlesticks(int tradingPairId, DateTime startDate, DateTime endDate)
+        {
+            var entities = _db.Candlesticks.Where(c => c.TradingPairId == tradingPairId &&  c.OpenTime >= startDate && c.OpenTime <= endDate).ToList();
+            return entities.Select(_mapper.Map<Candlestick>).ToList();
         }
 
         /// <inheritdoc />

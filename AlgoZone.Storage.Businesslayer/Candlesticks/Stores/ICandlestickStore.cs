@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AlgoZone.Storage.Businesslayer.Candlesticks.Models;
 
 namespace AlgoZone.Storage.Businesslayer.Candlesticks.Stores
@@ -27,6 +28,15 @@ namespace AlgoZone.Storage.Businesslayer.Candlesticks.Stores
         /// <param name="tradingPairId">The id of the trading pair.</param>
         /// <returns></returns>
         Datalayer.TimescaleDB.Entities.Candlestick GetCandlestickEntity(DateTime openTime, int tradingPairId);
+
+        /// <summary>
+        /// Gets a list of candlesticks for a trading pair between a start and end time.
+        /// </summary>
+        /// <param name="tradingPairId">The id of the trading pair.</param>
+        /// <param name="startDate">The start date time.</param>
+        /// <param name="endDate">The end date time.</param>
+        /// <returns></returns>
+        ICollection<Candlestick> GetCandlesticks(int tradingPairId, DateTime startDate, DateTime endDate);
 
         /// <summary>
         /// Updates a candlestick in the store.

@@ -36,7 +36,7 @@
       &lt;/Entry&gt;&#xD;
     &lt;/Region&gt;&#xD;
     &lt;Region Name="test methods"&gt;&#xD;
-      &lt;Entry DisplayName="Test Methods" Priority="100"&gt;&#xD;
+      &lt;Entry Priority="100" DisplayName="Test Methods"&gt;&#xD;
         &lt;Entry.Match&gt;&#xD;
           &lt;And&gt;&#xD;
             &lt;Kind Is="Method" /&gt;&#xD;
@@ -129,7 +129,7 @@
           &lt;/And&gt;&#xD;
         &lt;/Entry.Match&gt;&#xD;
       &lt;/Entry&gt;&#xD;
-      &lt;Entry DisplayName="Public Delegates" Priority="100"&gt;&#xD;
+      &lt;Entry Priority="100" DisplayName="Public Delegates"&gt;&#xD;
         &lt;Entry.Match&gt;&#xD;
           &lt;And&gt;&#xD;
             &lt;Access Is="Public" /&gt;&#xD;
@@ -137,7 +137,7 @@
           &lt;/And&gt;&#xD;
         &lt;/Entry.Match&gt;&#xD;
       &lt;/Entry&gt;&#xD;
-      &lt;Entry DisplayName="Public Events" Priority="100"&gt;&#xD;
+      &lt;Entry Priority="100" DisplayName="Public Events"&gt;&#xD;
         &lt;Entry.Match&gt;&#xD;
           &lt;And&gt;&#xD;
             &lt;Or&gt;&#xD;
@@ -151,7 +151,7 @@
           &lt;Name /&gt;&#xD;
         &lt;/Entry.SortBy&gt;&#xD;
       &lt;/Entry&gt;&#xD;
-      &lt;Entry DisplayName="Not Public Delegates" Priority="100"&gt;&#xD;
+      &lt;Entry Priority="100" DisplayName="Not Public Delegates"&gt;&#xD;
         &lt;Entry.Match&gt;&#xD;
           &lt;And&gt;&#xD;
             &lt;Kind Is="Delegate" /&gt;&#xD;
@@ -164,7 +164,7 @@
           &lt;Name /&gt;&#xD;
         &lt;/Entry.SortBy&gt;&#xD;
       &lt;/Entry&gt;&#xD;
-      &lt;Entry DisplayName="Not Public Events" Priority="100"&gt;&#xD;
+      &lt;Entry Priority="100" DisplayName="Not Public Events"&gt;&#xD;
         &lt;Entry.Match&gt;&#xD;
           &lt;And&gt;&#xD;
             &lt;Or&gt;&#xD;
@@ -202,7 +202,7 @@
       &lt;/Entry&gt;&#xD;
     &lt;/Region&gt;&#xD;
     &lt;Region Name="Methods"&gt;&#xD;
-      &lt;Entry DisplayName="Interface Implementations" Priority="100"&gt;&#xD;
+      &lt;Entry Priority="100" DisplayName="Interface Implementations"&gt;&#xD;
         &lt;Entry.Match&gt;&#xD;
           &lt;And&gt;&#xD;
             &lt;Kind Is="Member" /&gt;&#xD;
@@ -255,7 +255,7 @@
           &lt;Kind Is="Type" /&gt;&#xD;
         &lt;/Entry.Match&gt;&#xD;
       &lt;/Entry&gt;&#xD;
-      &lt;Entry DisplayName="Enums" Priority="100"&gt;&#xD;
+      &lt;Entry Priority="100" DisplayName="Enums"&gt;&#xD;
         &lt;Entry.Match&gt;&#xD;
           &lt;And&gt;&#xD;
             &lt;Access Is="Any" /&gt;&#xD;
@@ -277,4 +277,5 @@
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=ED071D4F6BD8CC4D967409E7929A6420/RelativePath/@EntryValue">..\..\..\VanDerValk Platform\Valk.Website2012.sln.DotSettings</s:String>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileED071D4F6BD8CC4D967409E7929A6420/@KeyIndexDefined">True</s:Boolean>
 	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileED071D4F6BD8CC4D967409E7929A6420/RelativePriority/@EntryValue">1</s:Double>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EAlwaysTreatStructAsNotReorderableMigration/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Businesslayer/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
