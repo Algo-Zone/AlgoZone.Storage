@@ -51,13 +51,21 @@ namespace AlgoZone.Storage.Businesslayer.Candlesticks.Stores
         /// <inheritdoc />
         public Datalayer.TimescaleDB.Entities.Candlestick GetCandlestickEntity(DateTime openTime, int tradingPairId)
         {
+            openTime = DateTime.SpecifyKind(openTime, DateTimeKind.Utc);
+            
             return _db.Candlesticks.Find(openTime, tradingPairId);
         }
 
         /// <inheritdoc />
         public ICollection<Candlestick> GetCandlesticks(int tradingPairId, DateTime startDate, DateTime endDate)
         {
-            var entities = _db.Candlesticks.Where(c => c.TradingPairId == tradingPairId &&  c.OpenTime >= startDate && c.OpenTime <= endDate).ToList();
+            startDate = DateTime.SpecifyKind(startDate, DateTimeKind.Utc);
+            endDate = DateTime.SpecifyKind(endDate, DateTimeKind.Utc);
+            
+            var entities = _db.Candlesticks
+                              .Where(c => c.TradingPairId == tradingPairId &&  c.OpenTime >= startDate && c.OpenTime <= endDate)
+                              .OrderBy(c => c.OpenTime)
+                              .ToList();
             return entities.Select(_mapper.Map<Candlestick>).ToList();
         }
 
